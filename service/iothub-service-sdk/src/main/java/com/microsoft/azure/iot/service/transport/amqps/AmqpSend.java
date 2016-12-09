@@ -20,7 +20,7 @@ import java.io.IOException;
  * overriding the events what are needed to handle
  * high level open, close and send methods.
  * Initialize and use AmqpsSendHandler class for low level ampqs operations.
- */
+*/
 public class AmqpSend extends BaseHandler
 {
     protected final String hostName;
@@ -111,9 +111,14 @@ public class AmqpSend extends BaseHandler
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_007: [The function shall initialize the Proton reactor object]
             this.reactor = Proton.reactor(this);
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_008: [The function shall start the Proton reactor object]
-            this.reactor.run();
+            try
+            {
+              this.reactor.run();
+            }
+            catch (Exception e) { 
+              System.err.println("Error "+ e.getMessage());
+            } 
             this.reactor.free();
-
         }
         else
         {
